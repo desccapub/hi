@@ -1,0 +1,80 @@
+class TicTacToe:
+    """
+    This class represents a Tic-Tac-Toe game.
+    """
+
+    def __init__(self):
+        """
+        Initializes the Tic-Tac-Toe game.
+        """
+        self.board = [[' ' for _ in range(3)] for _ in range(3)]
+        self.current_player = 'X'
+
+    def print_board(self):
+        """
+        Prints the current state of the Tic-Tac-Toe board.
+        """
+        for row in self.board:
+            print('|'.join(row))
+            print('-' * 5)
+
+    def make_move(self, row, col):
+        """
+        Makes a move on the Tic-Tac-Toe board.
+
+        Parameters:
+        row (int): The row index of the move (0-2).
+        col (int): The column index of the move (0-2).
+
+        Returns:
+        bool: True if the move was valid and made successfully, False otherwise.
+        """
+        if self.board[row][col] == ' ':
+            self.board[row][col] = self.current_player
+            self.current_player = 'O' if self.current_player == 'X' else 'X'
+            return True
+        else:
+            return False
+
+    def check_winner(self):
+        """
+        Checks if there is a winner in the Tic-Tac-Toe game.
+
+        Returns:
+        str: The symbol of the winner ('X' or 'O') if there is a winner, None otherwise.
+        """
+        # Check rows
+        for row in self.board:
+            if row[0] == row[1] == row[2] != ' ':
+                return row[0]
+
+        # Check columns
+        for col in range(3):
+            if self.board[0][col] == self.board[1][col] == self.board[2][col] != ' ':
+                return self.board[0][col]
+
+        # Check diagonals
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] != ' ':
+            return self.board[0][0]
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] != ' ':
+            return self.board[0][2]
+
+        return None
+
+# Example usage:
+game = TicTacToe()
+game.print_board()
+
+game.make_move(0, 0)
+game.make_move(1, 1)
+game.make_move(0, 1)
+game.make_move(1, 0)
+game.make_move(0, 2)
+
+game.print_board()
+
+winner = game.check_winner()
+if winner:
+    print(f"The winner is {winner}!")
+else:
+    print("It's a tie!")
